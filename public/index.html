@@ -4,9 +4,66 @@
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css" />
     </head>
     <body>
-        <div>TODO write content</div>
+        <div class="container-fluid">
+            <form>
+                <div class="form-group">
+                    <label for="enfant">Nom et prénom de l'enfant</label>
+                    <input type="email" class="form-control" id="enfant" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="mois-concerne">Mois concerné</label>
+                    <input type="password" class="form-control" id="mois-concerne" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="jours">Nombre de jours</label>
+                    <input type="password" class="form-control" id="jours" placeholder="Password">
+                </div>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Période à modifier</th>
+                            <th>Motif de présence ou d'absence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="form-control" name="periode[0][date]" value=""/></td>
+                            <td><input type="text" class="form-control" name="periode[0][motif]" value=""/></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control" name="periode[1][date]" value=""/></td>
+                            <td><input type="text" class="form-control" name="periode[1][motif]" value=""/></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control" name="periode[2][date]" value=""/></td>
+                            <td><input type="text" class="form-control" name="periode[2][motif]" value=""/></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control" name="periode[3][date]" value=""/></td>
+                            <td><input type="text" class="form-control" name="periode[3][motif]" value=""/></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control" name="periode[4][date]" value=""/></td>
+                            <td><input type="text" class="form-control" name="periode[4][motif]" value=""/></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control" name="periode[5][date]" value=""/></td>
+                            <td><input type="text" class="form-control" name="periode[5][motif]" value=""/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
         <script type="text/javascript" src="index.js"></script>
     </body>
 </html>
