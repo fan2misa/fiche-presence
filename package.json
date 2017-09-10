@@ -10,6 +10,10 @@
     ],
     "author": "oem",
     "contributors": [],
+    "main": "main.js",
+    "scripts": {
+      "electron": "electron ."
+    },
     "dependencies": {
         "electron": "^1.7.6"
     }
