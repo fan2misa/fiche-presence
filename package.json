@@ -12,9 +12,12 @@
     "contributors": [],
     "main": "main.js",
     "scripts": {
-      "electron": "electron ."
+        "electron": "electron ."
     },
     "dependencies": {
         "electron": "^1.7.6"
+    },
+    "devDependencies": {
+        "electron-reload": "^1.2.1"
     }
 }
