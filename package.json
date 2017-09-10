@@ -1,8 +1,16 @@
 {
     "name": "fiche-presence",
     "version": "1.0.0",
-    "keywords": ["util", "functional", "server", "client", "browser"],
+    "keywords": [
+        "util",
+        "functional",
+        "server",
+        "client",
+        "browser"
+    ],
     "author": "oem",
     "contributors": [],
-    "dependencies": {}
+    "dependencies": {
+        "electron": "^1.7.6"
+    }
 }
