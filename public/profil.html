@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fiche de présence</title>
+        <meta charset="UTF-8">
+        <meta data-name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css" />
+    </head>
+    <body>
+        <div class="container-fluid">
+            <h1 class="text-center">Profil</h1>
+            <form>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="nom">Votre nom</label>
+                            <input type="text" class="form-control" id="nom" data-name="nom">
+                        </div>
+                        <div class="form-group">
+                            <label for="prenom">Votre prénom</label>
+                            <input type="text" class="form-control" id="prenom" data-name="prenom">
+                        </div>
+                        <div class="form-group">
+                            <label for="lieu">Lieu de remplissage de vos fiche</label>
+                            <input type="text" class="form-control" id="lieu" data-name="lieu">
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <label for="signature">Signature</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="text-center">
+                                        <button type="button" id="signature" class="btn btn-default">Sélectionnez une signature</button>
+                                        <input type="hidden" data-name="signature">
+                                        <div id="signature_visuel"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" id="submit-button" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+        <script type="text/javascript">
+            var jQuery = require("jquery");
+        </script>
+        <script type="text/javascript" src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="profil.js"></script>
+    </body>
+</html>
