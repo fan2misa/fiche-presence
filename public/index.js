@@ -27,12 +27,14 @@ defaultDate.setMinutes(00);
 jQuery(function () {
     jQuery('.monthpicker').datetimepicker({
         viewMode: 'years',
-        format: 'MM/YYYY'
+        format: 'MM/YYYY',
+        showClose: true
     });
     
     jQuery('.datetimepicker').datetimepicker({
         format: 'DD/MM/YYYY HH:mm',
-        sideBySide: true
+        sideBySide: true,
+        showClose: true
     });
 });
 
