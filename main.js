@@ -37,14 +37,9 @@ var Window = {
         return electron.Menu.buildFromTemplate([
             {
                 label: 'Configuration',
-                submenu: [
-                    {
-                        label: 'Profil',
-                        click: function () {
-                            Window.main.loadURL('file://' + PUBLIC_PATH + '/profil.html');
-                        }
-                    }
-                ]
+                click: function () {
+                    Window.main.loadURL('file://' + PUBLIC_PATH + '/profil.html');
+                }
             },
             {
                 label: 'Quitter',
