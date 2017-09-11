@@ -4,6 +4,8 @@ var electron = require('electron');
 
 var PUBLIC_PATH = path.join(__dirname, 'public');
 
+require('electron-reload')(PUBLIC_PATH);
+
 var Window = {
 
     main: null,
@@ -17,7 +19,7 @@ var Window = {
     create: function () {
         Window.main = new electron.BrowserWindow({
             width: 850,
-            height: 650
+            height: 700
         });
 
         Window.main.setMenu(Window.getMenu());
