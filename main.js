@@ -18,7 +18,7 @@ var Window = {
 
     create: function () {
         Window.main = new electron.BrowserWindow({
-            width: 850,
+            width: 1050,
             height: 700
         });
 

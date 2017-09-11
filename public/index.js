@@ -11,11 +11,30 @@ var data = {};
 storage.get('profil', function (error, profil) {
     if (error)
         throw error;
-    
+
     data = Object.assign(data, {
         nom: profil.nom + " " + profil.prenom,
         lieu: profil.lieu,
         signature: profil.signature
+    });
+});
+
+
+var defaultDate = new Date();
+defaultDate.setHours(00);
+defaultDate.setMinutes(00);
+
+jQuery(function () {
+    jQuery('.monthpicker').datetimepicker({
+        viewMode: 'years',
+        format: 'MM/YYYY',
+        showClose: true
+    });
+    
+    jQuery('.datetimepicker').datetimepicker({
+        format: 'DD/MM/YYYY HH:mm',
+        sideBySide: true,
+        showClose: true
     });
 });
 
@@ -27,7 +46,7 @@ jQuery('#submit-button').on("click", function () {
     });
 
     jQuery('table').find('tbody').find('tr').each((index, tr) => {
-        data["periode_" + (index + 1)] = jQuery(tr).find('[data-name=periode]').val();
+        data["periode_" + (index + 1)] = "Du " + jQuery(tr).find('[data-name=periode1]').val() + " au " + jQuery(tr).find('[data-name=periode2]').val();
         data["motif_" + (index + 1)] = jQuery(tr).find('[data-name=motif]').val();
     });
 
@@ -35,21 +54,21 @@ jQuery('#submit-button').on("click", function () {
 });
 
 function generateFile(data) {
-    
+
     data = Object.assign(data, {
         date: getToday()
     });
-    
+
     var content = fs.readFileSync(__dirname + "/files/fiche.docx", "binary");
     var doc = new Docxtemplater();
-    
+
     var zip = new JSZip(content);
     doc.loadZip(zip);
-    
+
     doc.attachModule(new ImageModule({
         centered: false,
         getImage: function (tagValue, tagName) {
-            return fs.readFileSync(tagValue,'binary');
+            return fs.readFileSync(tagValue, 'binary');
         },
         getSize: function (img, tagValue, tagName) {
             sizeOf = require('image-size');
@@ -57,11 +76,11 @@ function generateFile(data) {
             return [dimensions.width, dimensions.height];
         }
     }));
-    
+
     doc.setData(data);
 
     doc.render();
-    
+
     var out = doc.getZip().generate({type: "blob"});
 
     FileSaver.saveAs(out, "Fiche de présence - " + data.enfant + " - " + data.mois + ".docx");
