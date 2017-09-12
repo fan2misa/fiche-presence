@@ -3,6 +3,7 @@ var electron = require('electron');
 var remote = electron.remote;
 var fs = remote.require('fs');
 var storage = require('electron-json-storage');
+const path = require('path');
 
 /**
  * 
@@ -35,14 +36,18 @@ jQuery('#submit-button').on("click", function () {
 /**
  * 
  */
-jQuery('#signature').on("click", function () {
+jQuery('#signature').on("click", function () { 
     remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
         title: "Selectionnez votre signature",
         properties: ['openFile']
     }, function (filenames) {
-        jQuery('form').find('[data-name=signature]').val(filenames[0]);
+        filepath = path.join(remote.app.getPath("userData"), path.basename(filenames[0]));
+        
+        jQuery('form').find('[data-name=signature]').val(filepath);
         jQuery('#signature_visuel').empty();
-        jQuery('#signature_visuel').append(jQuery('<img />').attr('src', filenames[0]));
+
+        fs.createReadStream(filenames[0]).pipe(fs.createWriteStream(filepath));
+        
+        jQuery('#signature_visuel').append(jQuery('<img />').attr('src', filepath));
     });
 });
-
