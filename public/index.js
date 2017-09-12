@@ -1,6 +1,7 @@
 
 var JSZip = require('jszip');
 var fs = require('fs');
+const path = require('path');
 var Docxtemplater = require('docxtemplater');
 var FileSaver = require('file-saver');
 var storage = require('electron-json-storage');
@@ -50,10 +51,47 @@ jQuery('#submit-button').on("click", function () {
         data["motif_" + (index + 1)] = jQuery(tr).find('[data-name=motif]').val();
     });
 
-    generateFile(data);
+    saveDocx(data);
 });
 
-function generateFile(data) {
+function generateDocx(data) {
+
+    data = Object.assign(data, {
+        date: getToday()
+    });
+
+    var content = fs.readFileSync(__dirname + "/files/fiche.docx", "binary");
+    var doc = new Docxtemplater();
+
+    var zip = new JSZip(content);
+    doc.loadZip(zip);
+
+    doc.attachModule(new ImageModule({
+        centered: false,
+        getImage: function (tagValue, tagName) {
+            return fs.readFileSync(tagValue, 'binary');
+        },
+        getSize: function (img, tagValue, tagName) {
+            sizeOf = require('image-size');
+            var dimensions = sizeOf(tagValue);
+            return [dimensions.width, dimensions.height];
+        }
+    }));
+
+    doc.setData(data);
+
+    doc.render();
+
+    var out = doc.getZip().generate({type: "nodebuffer"});
+
+    // FileSaver.saveAs(out, "Fiche de présence - " + data.enfant + " - " + data.mois + ".docx");
+    
+    var docxpath = path.join(remote.app.getPath("userData"), "fiche.docx");
+        
+    fs.writeFileSync(docxpath, out);
+}
+
+function saveDocx(data) {
 
     data = Object.assign(data, {
         date: getToday()
