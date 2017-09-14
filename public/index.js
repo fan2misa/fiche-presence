@@ -7,7 +7,7 @@ var FileSaver = require('file-saver');
 var storage = require('electron-json-storage');
 var ImageModule = require('docxtemplater-image-module');
 
-var pdf = require('./inc/generatePdf');
+var pdf = require('./inc/pdf');
 
 var data = {};
 
