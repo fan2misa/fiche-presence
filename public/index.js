@@ -60,7 +60,7 @@ jQuery('#submit-button').on("click", function () {
         });
     });
 
-    pdf.generate(data);
+    pdf.generate(data);    
 });
 
 function generateDocx(data) {

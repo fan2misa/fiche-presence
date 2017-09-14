@@ -4,6 +4,7 @@ var remote = electron.remote;
 var fs = remote.require('fs');
 var storage = require('electron-json-storage');
 const path = require('path');
+var base64Img = require('base64-img');
 
 /**
  * 
@@ -43,11 +44,13 @@ jQuery('#signature').on("click", function () {
     }, function (filenames) {
         filepath = path.join(remote.app.getPath("userData"), path.basename(filenames[0]));
         
-        jQuery('form').find('[data-name=signature]').val(filepath);
-        jQuery('#signature_visuel').empty();
+        base64Img.base64(filepath, function(err, data) {
+            jQuery('form').find('[data-name=signature]').val(data);
+            jQuery('#signature_visuel').empty();
 
-        fs.createReadStream(filenames[0]).pipe(fs.createWriteStream(filepath));
-        
-        jQuery('#signature_visuel').append(jQuery('<img />').attr('src', filepath));
+            fs.createReadStream(filenames[0]).pipe(fs.createWriteStream(filepath));
+
+            jQuery('#signature_visuel').append(jQuery('<img />').attr('src', data));
+        });
     });
 });
