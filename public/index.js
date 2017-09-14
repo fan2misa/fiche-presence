@@ -7,6 +7,8 @@ var FileSaver = require('file-saver');
 var storage = require('electron-json-storage');
 var ImageModule = require('docxtemplater-image-module');
 
+var pdf = require('./inc/generatePdf');
+
 var data = {};
 
 storage.get('profil', function (error, profil) {
@@ -44,14 +46,20 @@ jQuery('#submit-button').on("click", function () {
         enfant: jQuery('form').find('[data-name=enfant]').val(),
         mois: jQuery('form').find('[data-name=mois]').val(),
         jours: jQuery('form').find('[data-name=jours]').val(),
+        periodes: []
     });
 
     jQuery('table').find('tbody').find('tr').each((index, tr) => {
-        data["periode_" + (index + 1)] = "Du " + jQuery(tr).find('[data-name=periode1]').val() + " au " + jQuery(tr).find('[data-name=periode2]').val();
-        data["motif_" + (index + 1)] = jQuery(tr).find('[data-name=motif]').val();
+        data.periodes.push({
+            periode: {
+                start: jQuery(tr).find('[data-name=periode1]').val(), 
+                end: jQuery(tr).find('[data-name=periode2]').val()
+            },
+            motif: jQuery(tr).find('[data-name=motif]').val()
+        });
     });
 
-    saveDocx(data);
+    pdf.generate(data);
 });
 
 function generateDocx(data) {
