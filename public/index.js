@@ -18,7 +18,8 @@ storage.get('profil', function (error, profil) {
     data = Object.assign(data, {
         nom: profil.nom + " " + profil.prenom,
         lieu: profil.lieu,
-        signature: profil.signature
+        signature: profil.signature,
+        date: getToday()
     });
 });
 
