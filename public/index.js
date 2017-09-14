@@ -1,4 +1,6 @@
 
+var electron = require('electron');
+var remote = electron.remote;
 var JSZip = require('jszip');
 var fs = require('fs');
 const path = require('path');
@@ -60,7 +62,17 @@ jQuery('#submit-button').on("click", function () {
         });
     });
 
-    pdf.generate(data);    
+    pdf.generate(data);
+        
+    console.log();
+    
+    remote.dialog.showSaveDialog({
+        defaultPath: path.join(remote.app.getPath('documents'), "Fiche de présence.pdf")
+    }, (filename) => {
+        console.log(filename);
+        console.log(path.join(remote.app.getPath("userData"), "fiche.pdf"));
+    });
+   
 });
 
 function generateDocx(data) {
