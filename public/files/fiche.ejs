@@ -1,0 +1,107 @@
+<style>
+    .full-width { width: 100%;}
+    .text-left { text-align: left; }
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    
+    h1 {
+        text-align: center;
+        font-weight: bold;
+        text-decoration: underline;
+        text-transform: uppercase;
+    }
+    
+    .table {
+        width: 100%;
+        border-collapse: collapse; 
+    }
+    
+    .table th,
+    .table td {
+        border: 1px solid black;
+    }
+</style>
+<table class="full-width">
+    <tr>
+        <td class="text-left">Délégation sociale</td>
+        <td class="text-right">Madame <%= data.nom %></td>
+    </tr>
+    <tr>
+        <td>Direction enfance-famille</td>
+        <td></td>
+    </tr>
+</table>
+<br/>
+<table>
+    <tr>
+        <td class="text-left">N/Ref</td>
+        <td class="text-left">: GAM</td>
+    </tr>
+    <tr>
+        <td class="text-left">Poste</td>
+        <td class="text-left">: 02 32 31 50 71</td>
+    </tr>
+</table>
+<h1>Fiche de présence</h1>
+
+<table>
+    <tr>
+        <td class="text-left">Nom et prénom de l'enfant (obligatoire)</td>
+        <td class="text-left">: <%= data.enfant %></td>
+    </tr>
+    <tr>
+        <td class="text-left">Mois concerné</td>
+        <td class="text-left">: <%= data.mois %></td>
+    </tr>
+    <tr>
+        <td class="text-left">Nombre de jours réels de présence dans le mois</td>
+        <td class="text-left">: <%= data.jours %></td>
+    </tr>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-center">Période à modifier</th>
+            <th class="text-center">Motif de présence ou d'absence</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% data.periodes.forEach(function(row) { %>
+        <tr>
+            <td>
+                <% if (row.periode.start && row.periode.end) { %>
+                    Du <%= row.periode.start %> au <%= row.periode.end %>
+                <% } else if (row.periode.start) { %>
+                    <%= row.periode.start %>
+                <% } else if (row.periode.end) { %>
+                    <%= row.periode.end %>
+                <% } %>
+            </td>
+            <td>
+                <%= row.motif %>
+            </td>
+        </tr>
+        <% }); %>
+    </tbody>
+</table>
+
+<p class="text-right">
+    <%= data.lieu %>, Le <%= data.date %>
+</p>
+
+<div class="text-right">
+    <img src="<%= data.signature %>" />
+</div>
+
+<table>
+    <tr>
+        <td style="width: 100px; vertical-align: top;">NB :</td>
+        <td>
+            Ce récapitulatif est à envoyer à terme échu et avant le 9 du mois suivant.<br/>
+            Envoyer un récapitulatif (par enfant) uniquement si le nombre de jours payé sur votre
+            bulletin de salaire est erroné.<br/>
+            toutes les modifications doivent être motivées.
+        </td>
+    </tr>
+</table>
