@@ -8,6 +8,7 @@ var Docxtemplater = require('docxtemplater');
 var FileSaver = require('file-saver');
 var storage = require('electron-json-storage');
 var ImageModule = require('docxtemplater-image-module');
+var move = require('file-move');
 
 var pdf = require('./inc/pdf');
 
@@ -63,87 +64,16 @@ jQuery('#submit-button').on("click", function () {
     });
 
     pdf.generate(data);
-        
-    console.log();
-    
+
     remote.dialog.showSaveDialog({
         defaultPath: path.join(remote.app.getPath('documents'), "Fiche de présence.pdf")
     }, (filename) => {
-        console.log(filename);
-        console.log(path.join(remote.app.getPath("userData"), "fiche.pdf"));
+        move(path.join(remote.app.getPath("userData"), "fiche.pdf"), filename, function (err) {
+            
+        });
     });
    
 });
-
-function generateDocx(data) {
-
-    data = Object.assign(data, {
-        date: getToday()
-    });
-
-    var content = fs.readFileSync(__dirname + "/files/fiche.docx", "binary");
-    var doc = new Docxtemplater();
-
-    var zip = new JSZip(content);
-    doc.loadZip(zip);
-
-    doc.attachModule(new ImageModule({
-        centered: false,
-        getImage: function (tagValue, tagName) {
-            return fs.readFileSync(tagValue, 'binary');
-        },
-        getSize: function (img, tagValue, tagName) {
-            sizeOf = require('image-size');
-            var dimensions = sizeOf(tagValue);
-            return [dimensions.width, dimensions.height];
-        }
-    }));
-
-    doc.setData(data);
-
-    doc.render();
-
-    var out = doc.getZip().generate({type: "nodebuffer"});
-
-    // FileSaver.saveAs(out, "Fiche de présence - " + data.enfant + " - " + data.mois + ".docx");
-    
-    var docxpath = path.join(remote.app.getPath("userData"), "fiche.docx");
-        
-    fs.writeFileSync(docxpath, out);
-}
-
-function saveDocx(data) {
-
-    data = Object.assign(data, {
-        date: getToday()
-    });
-
-    var content = fs.readFileSync(__dirname + "/files/fiche.docx", "binary");
-    var doc = new Docxtemplater();
-
-    var zip = new JSZip(content);
-    doc.loadZip(zip);
-
-    doc.attachModule(new ImageModule({
-        centered: false,
-        getImage: function (tagValue, tagName) {
-            return fs.readFileSync(tagValue, 'binary');
-        },
-        getSize: function (img, tagValue, tagName) {
-            sizeOf = require('image-size');
-            var dimensions = sizeOf(tagValue);
-            return [dimensions.width, dimensions.height];
-        }
-    }));
-
-    doc.setData(data);
-
-    doc.render();
-
-    var out = doc.getZip().generate({type: "blob"});
-
-    FileSaver.saveAs(out, "Fiche de présence - " + data.enfant + " - " + data.mois + ".docx");
-}
 
 /**
  * 

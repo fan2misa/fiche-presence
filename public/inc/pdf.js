@@ -2,7 +2,6 @@
 var electron = require('electron');
 var remote = electron.remote;
 var pdfMaker = require('pdf-maker');
-var electron = require('electron');
 var remote = electron.remote;
 
 module.exports.generate = function (data) {
