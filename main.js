@@ -1,62 +1,67 @@
 
-var path = require('path');
-var electron = require('electron');
+const setupEvents = require('./setupEvents');
 
-var PUBLIC_PATH = path.join(__dirname, 'public');
+if (!setupEvents.handleSquirrelEvent()) {
 
-var Window = {
+    var path = require('path');
+    var electron = require('electron');
 
-    main: null,
+    var PUBLIC_PATH = path.join(__dirname, 'public');
 
-    init: function () {
-        if (Window.main === null) {
-            Window.create();
-        }
-    },
+    var Window = {
 
-    create: function () {
-        Window.main = new electron.BrowserWindow({
-            width: 1100,
-            height: 700
-        });
+        main: null,
 
-        Window.main.setMenu(Window.getMenu());
-
-        Window.main.loadURL('file://' + PUBLIC_PATH + '/index.html');
-
-        // Window.main.webContents.openDevTools();
-
-        Window.main.on('closed', function () {
-            Window.main = null;
-        });
-    },
-
-    getMenu: function () {
-        return electron.Menu.buildFromTemplate([
-            {
-                label: 'Configuration',
-                click: function () {
-                    Window.main.loadURL('file://' + PUBLIC_PATH + '/profil.html');
-                }
-            },
-            {
-                label: 'Quitter',
-                click: function () {
-                    electron.app.quit();
-                }
+        init: function () {
+            if (Window.main === null) {
+                Window.create();
             }
-        ]);
-    }
-};
+        },
 
-electron.app.on('ready', Window.create);
+        create: function () {
+            Window.main = new electron.BrowserWindow({
+                width: 1100,
+                height: 700
+            });
 
-electron.app.on('window-all-closed', function () {
-    if (process.platform !== 'darwin') {
-        electron.app.quit();
-    }
-});
+            Window.main.setMenu(Window.getMenu());
 
-electron.app.on('activate', function () {
-    Window.init();
-});
+            Window.main.loadURL('file://' + PUBLIC_PATH + '/index.html');
+
+            // Window.main.webContents.openDevTools();
+
+            Window.main.on('closed', function () {
+                Window.main = null;
+            });
+        },
+
+        getMenu: function () {
+            return electron.Menu.buildFromTemplate([
+                {
+                    label: 'Configuration',
+                    click: function () {
+                        Window.main.loadURL('file://' + PUBLIC_PATH + '/profil.html');
+                    }
+                },
+                {
+                    label: 'Quitter',
+                    click: function () {
+                        electron.app.quit();
+                    }
+                }
+            ]);
+        }
+    };
+
+    electron.app.on('ready', Window.create);
+
+    electron.app.on('window-all-closed', function () {
+        if (process.platform !== 'darwin') {
+            electron.app.quit();
+        }
+    });
+
+    electron.app.on('activate', function () {
+        Window.init();
+    });
+}
