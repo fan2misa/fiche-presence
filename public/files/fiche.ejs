@@ -1,6 +1,6 @@
 <style>
     body * {
-        font-size: 12px;
+        font-size: 14px;
     }
     
     .full-width { width: 100%;}
@@ -28,7 +28,7 @@
     }
     
     .table {
-        font-size: 12px;
+        font-size: 14px;
         width: 100%;
         border-collapse: collapse; 
     }
@@ -40,7 +40,7 @@
     }
     
     .table th {
-        font-size: 14px;
+        font-size: 16px;
     }
     
     .signature {
@@ -89,7 +89,13 @@
         <td class="text-left">Nombre de jours réels de présence dans le mois</td>
         <td class="text-left">: 
             <div class="jours-container">
-                <span class="write"><%= data.jours %></span>
+                <span class="write">
+                    <% if (data.jours) { %>
+                        <%= data.jours %>
+                     <% } else { %>
+                        &nbsp;
+                    <% } %>
+                </span>
             </div>
         </td>
     </tr>
@@ -112,10 +118,16 @@
                     <%= row.periode.start %>
                 <% } else if (row.periode.end) { %>
                     <%= row.periode.end %>
+                <% } else { %>
+                    &nbsp;
                 <% } %>
             </td>
             <td class="write">
-                <%= row.motif %>
+                 <% if (row.motif) { %>
+                    <%= row.motif %>
+                 <% } else { %>
+                    &nbsp;
+                <% } %>
             </td>
         </tr>
         <% }); %>
