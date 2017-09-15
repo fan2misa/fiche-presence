@@ -12,7 +12,8 @@
   "contributors": [],
   "main": "main.js",
   "scripts": {
-    "electron": "electron ."
+    "electron": "electron .",
+    "build": "electron-packager public/ fiche-presence --platform=win32 --arch=all --out=dist"
   },
   "dependencies": {
     "base64-img": "^1.0.3",
