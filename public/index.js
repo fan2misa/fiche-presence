@@ -64,17 +64,12 @@ jQuery('#submit-button').on("click", function () {
     });
 
     pdf.generate(data);
-        
-    console.log();
-    
+
     remote.dialog.showSaveDialog({
         defaultPath: path.join(remote.app.getPath('documents'), "Fiche de présence.pdf")
     }, (filename) => {
-        console.log(filename);
-        console.log(path.join(remote.app.getPath("userData"), "fiche.pdf"));
-        
         move(path.join(remote.app.getPath("userData"), "fiche.pdf"), filename, function (err) {
-            console.log('Move!!!');
+            
         });
     });
    
