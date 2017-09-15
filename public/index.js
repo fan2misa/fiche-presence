@@ -1,13 +1,9 @@
 
 var electron = require('electron');
 var remote = electron.remote;
-var JSZip = require('jszip');
 var fs = require('fs');
 const path = require('path');
-var Docxtemplater = require('docxtemplater');
-var FileSaver = require('file-saver');
 var storage = require('electron-json-storage');
-var ImageModule = require('docxtemplater-image-module');
 var move = require('file-move');
 
 var pdf = require('./inc/pdf');
