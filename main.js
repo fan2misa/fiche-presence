@@ -4,8 +4,6 @@ var electron = require('electron');
 
 var PUBLIC_PATH = path.join(__dirname, 'public');
 
-require('electron-reload')(PUBLIC_PATH);
-
 var Window = {
 
     main: null,
