@@ -8,6 +8,7 @@ var Docxtemplater = require('docxtemplater');
 var FileSaver = require('file-saver');
 var storage = require('electron-json-storage');
 var ImageModule = require('docxtemplater-image-module');
+var move = require('file-move');
 
 var pdf = require('./inc/pdf');
 
@@ -71,6 +72,10 @@ jQuery('#submit-button').on("click", function () {
     }, (filename) => {
         console.log(filename);
         console.log(path.join(remote.app.getPath("userData"), "fiche.pdf"));
+        
+        move(path.join(remote.app.getPath("userData"), "fiche.pdf"), filename, function (err) {
+            console.log('Move!!!');
+        });
     });
    
 });
