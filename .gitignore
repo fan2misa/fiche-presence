@@ -1,6 +1,7 @@
 
 /node_modules/
 /public/vendor/
+npm-debug.log
 
 /dist/
 
