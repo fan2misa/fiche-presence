@@ -24,33 +24,41 @@ storage.get('profil', function (error, data) {
  * 
  */
 jQuery('#submit-button').on("click", function () {
-    storage.set('profil', {
-        nom: jQuery('form').find('[data-name=nom]').val(),
-        prenom: jQuery('form').find('[data-name=prenom]').val(),
-        lieu: jQuery('form').find('[data-name=lieu]').val(),
-        signature: jQuery('form').find('[data-name=signature]').val(),
-    });
-
-    window.location.href = 'index.html';
+    if (jQuery('form').find('img').hasClass('signature-changed')) {
+        base64Img.base64(jQuery('form').find('img').attr('src'), function(err, data) {
+                storage.set('profil', {
+                    nom: jQuery('form').find('[data-name=nom]').val(),
+                    prenom: jQuery('form').find('[data-name=prenom]').val(),
+                    lieu: jQuery('form').find('[data-name=lieu]').val(),
+                    signature: data,
+                }, () => window.location.href = 'index.html');
+            });
+    } else {
+        storage.set('profil', {
+            nom: jQuery('form').find('[data-name=nom]').val(),
+            prenom: jQuery('form').find('[data-name=prenom]').val(),
+            lieu: jQuery('form').find('[data-name=lieu]').val(),
+            signature: jQuery('form').find('[data-name=signature]').val(),
+        }, () => window.location.href = 'index.html');
+    }
 });
 
 /**
  * 
  */
-jQuery('#signature').on("click", function () { 
+jQuery('#signature').on("click", function () {
     remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
         title: "Selectionnez votre signature",
         properties: ['openFile']
     }, function (filenames) {
-        filepath = path.join(remote.app.getPath("userData"), path.basename(filenames[0]));
-        
-        base64Img.base64(filepath, function(err, data) {
-            jQuery('form').find('[data-name=signature]').val(data);
-            jQuery('#signature_visuel').empty();
+        filepath = path.join(remote.app.getPath("userData"), "sign" + path.extname(filenames[0]));
 
-            fs.createReadStream(filenames[0]).pipe(fs.createWriteStream(filepath));
+        jQuery('form').find('[data-name=signature]').val(filepath);
+        jQuery('#signature_visuel').empty();
 
-            jQuery('#signature_visuel').append(jQuery('<img />').attr('src', data));
-        });
+        fs.createReadStream(filenames[0])
+                .pipe(fs.createWriteStream(filepath).on('finish', () => {
+                    jQuery('#signature_visuel').append(jQuery('<img />').attr('src', filepath).addClass('signature-changed'))
+        }));
     });
 });
