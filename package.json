@@ -1,8 +1,33 @@
 {
-    "name": "fiche-presence",
-    "version": "1.0.0",
-    "keywords": ["util", "functional", "server", "client", "browser"],
-    "author": "oem",
-    "contributors": [],
-    "dependencies": {}
+  "name": "fiche-presence",
+  "version": "1.0.0",
+  "keywords": [
+    "util",
+    "functional",
+    "server",
+    "client",
+    "browser"
+  ],
+  "author": "oem",
+  "contributors": [],
+  "main": "main.js",
+  "scripts": {
+    "electron": "electron .",
+    "build": "electron-packager . fiche-presence --platform=win32 --arch=all --out=dist --overwrite",
+    "installer": "node installer.js"
+  },
+  "dependencies": {
+    "base64-img": "^1.0.3",
+    "ejs": "^2.5.7",
+    "electron": "^1.7.6",
+    "electron-json-storage": "^3.1.0",
+    "file-move": "0.0.3",
+    "jquery": "^3.2.1",
+    "pdf-maker": "0.0.2"
+  },
+  "devDependencies": {
+    "electron-packager": "^9.0.1",
+    "electron-reload": "^1.2.1",
+    "electron-winstaller": "^2.6.3"
+  }
 }
