@@ -28,9 +28,10 @@ if (!setupEvents.handleSquirrelEvent()) {
 
             Window.main.loadURL('file://' + PUBLIC_PATH + '/index.html');
 
-            // Window.main.webContents.openDevTools();
+            Window.main.webContents.openDevTools();
 
             Window.main.on('closed', function () {
+                // console.log(Window.main.getBounds());
                 Window.main = null;
             });
         },

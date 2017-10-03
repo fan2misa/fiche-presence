@@ -68,9 +68,23 @@ jQuery('#submit-button').on("click", function () {
     remote.dialog.showSaveDialog({
         defaultPath: path.join(remote.app.getPath('documents'), "Fiche de présence.pdf")
     }, (filename) => {
-        move(path.join(remote.app.getPath("userData"), "fiche.pdf"), filename, function (err) {
-            
-        });
+        console.log("GENERATE");
+        jQuery('.loading').show().find('.loading-text').text('Chargement du PDF ...');
+        setTimeout(() => {
+            move(path.join(remote.app.getPath("userData"), "fiche.pdf"), filename, function (err) {
+                jQuery('form').find('[data-name=enfant]').val('');
+                jQuery('form').find('[data-name=jours]').val('');
+
+                jQuery('table').find('tbody').find('tr').each((index, tr) => {
+                    jQuery(tr).find('[data-name=periode1]').val('');
+                    jQuery(tr).find('[data-name=periode2]').val('');
+                    jQuery(tr).find('[data-name=motif]').val('');
+                });
+                
+                jQuery('.loading').hide().find('.loading-text').empty();
+            });
+            console.log("END");
+        }, 3000);
     });
    
 });
