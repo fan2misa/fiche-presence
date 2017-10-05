@@ -69,7 +69,7 @@ jQuery('#submit-button').on("click", function () {
         defaultPath: path.join(remote.app.getPath('documents'), "Fiche de présence.pdf")
     }, (filename) => {
         console.log("GENERATE");
-        jQuery('.loading').show().find('.loading-text').text('Chargement du PDF ...');
+        jQuery('.loading').css('display', 'table').find('.loading-text').text('Chargement du PDF ...');
         setTimeout(() => {
             move(path.join(remote.app.getPath("userData"), "fiche.pdf"), filename, function (err) {
                 jQuery('form').find('[data-name=enfant]').val('');
