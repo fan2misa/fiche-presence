@@ -27,6 +27,7 @@ if (!setupEvents.handleSquirrelEvent()) {
             let opt = Object.assign({
                 width: 1100,
                 height: 700,
+                isMaximized: false
             }, config.get('winSize'));
             
             Window.main = new electron.BrowserWindow({
@@ -34,20 +35,30 @@ if (!setupEvents.handleSquirrelEvent()) {
                 height: opt.height
             });
 
+            if (opt.isMaximized) {
+                Window.main.maximize();
+            }
+
             Window.main.setMenu(Window.getMenu());
 
             Window.main.loadURL('file://' + PUBLIC_PATH + '/index.html');
 
             // Window.main.webContents.openDevTools();
 
+            Window.main.on('maximize', function () {
+                console.log("BOOM");
+            });
+
             Window.main.on('closed', function () {
                 Window.main = null;
             });
 
             Window.main.on('close', () => {
+                console.log(Window.main.isFullScreen());
                 config.set('winSize', {
                     width: Window.main.getSize()[0],
                     height: Window.main.getSize()[1],
+                    isMaximized: Window.main.isMaximized()
                 });
             });
         },
