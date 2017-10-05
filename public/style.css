@@ -21,7 +21,9 @@ and open the template in the editor.
 }
 
 .loading-text {
-    margin: 50% auto;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
     color: #fff;
     font-size: 2em;
 }
